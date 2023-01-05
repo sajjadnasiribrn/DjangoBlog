@@ -1,2 +1,2 @@
 # DjangoBlog
- a blog that made by django python frame work
+ a blog that made by django python framework
