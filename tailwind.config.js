@@ -7,7 +7,7 @@ module.exports = {
   darkMode: "class",
   theme: {
     fontFamily: {
-      body: ["Poppins", "sans-serif"],
+      body: ["iranyekan", "serif"],
     },
 
     screens: {

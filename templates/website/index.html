@@ -7,69 +7,41 @@
     <div class="container mx-auto">
         <div class="border-b border-grey-lighter py-16 lg:py-20">
             <div>
-                <img src="{% static 'img/author.png' %}" class="h-16 w-16" alt="author"/>
+                <img src="{% static 'img/author.jpg' %}" class="h-16 w-16 rounded-full" alt="author"/>
             </div>
             <h1
-                    class="pt-3 font-body text-4xl font-semibold text-primary dark:text-white md:text-5xl lg:text-6xl"
+                    class="pt-3 font-body text-4xl font-semibold text-primary dark:text-white text-lg"
             >
-                Hi, I’m John Doe.
+                سوتا یعنی:
             </h1>
             <p class="pt-3 font-body text-xl font-light text-primary dark:text-white">
-                A software engineer and open-source advocate enjoying the sunny life in Barcelona, Spain.
+                مفاهیم اصلی، بدون پیچیدگی جزییات.
             </p>
-            <a
-                    href="/"
-                    class="mt-12 block bg-secondary px-10 py-4 text-center font-body text-xl font-semibold text-white transition-colors hover:bg-green sm:inline-block sm:text-left sm:text-2xl"
-            >
-                Say Hello!
-            </a>
-        </div>
-
-        <div class="border-b border-grey-lighter py-16 lg:py-20">
-            <div class="flex items-center pb-6">
-                <img src="{% static 'img/icon-story.png' %}" alt="icon story"/>
-                <h3
-                        class="ml-3 font-body text-2xl font-semibold text-primary dark:text-white"
-                >
-                    My Story
-                </h3>
-            </div>
-            <div>
-                <p class="font-body font-light text-primary dark:text-white">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Nibh mauris cursus
-                    mattis molestie. Et leo duis ut diam. Sit amet tellus cras adipiscing
-                    enim eu turpis. Adipiscing at in tellus integer feugiat.
-                    <br/>
-                    <br/>
-                    Maecenas accumsan lacus vel facilisis. Eget egestas purus viverra
-                    accumsan in nisl nisi scelerisque eu. Non tellus orci ac auctor augue
-                    mauris augue neque gravida. Auctor augue mauris augue neque gravida in
-                    fermentum et sollicitudin. Tempus urna et pharetra pharetra massa massa
-                    ultricies mi quis. Amet mauris commodo quis imperdiet massa. Integer
-                    vitae justo eget magna fermentum iaculis eu non.
-                </p>
-            </div>
+            <!--            <a-->
+            <!--                    href="/"-->
+            <!--                    class="mt-12 block bg-secondary px-10 py-4 text-center font-body text-xl font-semibold text-white transition-colors hover:bg-green sm:inline-block sm:text-left sm:text-2xl"-->
+            <!--            >-->
+            <!--                Say Hello!-->
+            <!--            </a>-->
         </div>
 
         <div class="py-16 lg:py-20">
             <div class="flex items-center pb-6">
                 <img src="{% static 'img/icon-story.png' %}" alt="icon story"/>
                 <h3
-                        class="ml-3 font-body text-2xl font-semibold text-primary dark:text-white"
+                        class="mr-3 font-body text-xl font-semibold text-primary dark:text-white"
                 >
-                    My Story
+                    پر بازدیدترین
                 </h3>
                 <a
                         href="/blog"
-                        class="flex items-center pl-10 font-body italic text-green transition-colors hover:text-secondary dark:text-green-light dark:hover:text-secondary"
+                        class="flex items-center pr-10 font-body italic text-green transition-colors hover:text-secondary dark:text-green-light dark:hover:text-secondary"
                 >
-                    All posts
-                    <img
-                            src="{% static 'img/long-arrow-right.png' %}"
-                            class="ml-3"
-                            alt="arrow right"
-                    />
+                    همه نوشته ها
+                    <span
+                            class="mr-1.5 mdi mdi-arrow-left"
+                    >
+                    </span>
                 </a>
             </div>
             <div class="pt-8">
@@ -146,9 +118,9 @@
             <div class="flex items-center pb-6">
                 <img src="{% static 'img/icon-project.png' %}" alt="icon story"/>
                 <h3
-                        class="ml-3 font-body text-2xl font-semibold text-primary dark:text-white"
+                        class="mr-3 font-body text-xl font-semibold text-primary dark:text-white"
                 >
-                    My Projects
+                    پروژه ها
                 </h3>
             </div>
             <div>
@@ -167,65 +139,8 @@
             Rapidly build modern websites without ever leaving your HTML.
           </p>
         </span>
-                    <span class="w-1/10">
-          <img src="{% static 'img/chevron-right.png' %}" class="mx-auto" alt="chevron right"/>
-        </span>
-                </a>
+                    <span class="w-1/10 mdi mdi-chevron-left text-3xl dark:text-white">
 
-                <a
-                        href=" / "
-                        class="mb-6 flex items-center justify-between border border-grey-lighter px-4 py-4 sm:px-6"
-                >
-        <span class="w-9/10 pr-8">
-          <h4
-                  class="font-body text-lg font-semibold text-primary dark:text-white"
-          >
-            Maizzle
-          </h4>
-          <p class="font-body font-light text-primary dark:text-white">
-            Framework for Rapid Email Prototyping
-          </p>
-        </span>
-                    <span class="w-1/10">
-          <img src="{% static 'img/chevron-right.png' %}" class="mx-auto" alt="chevron right"/>
-        </span>
-                </a>
-
-                <a
-                        href=" / "
-                        class="mb-6 flex items-center justify-between border border-grey-lighter px-4 py-4 sm:px-6"
-                >
-        <span class="w-9/10 pr-8">
-          <h4
-                  class="font-body text-lg font-semibold text-primary dark:text-white"
-          >
-            Alpine.js
-          </h4>
-          <p class="font-body font-light text-primary dark:text-white">
-            Think of it like Tailwind for JavaScript.
-          </p>
-        </span>
-                    <span class="w-1/10">
-          <img src="{% static 'img/chevron-right.png' %}" class="mx-auto" alt="chevron right"/>
-        </span>
-                </a>
-
-                <a
-                        href=" / "
-                        class="mb-6 flex items-center justify-between border border-grey-lighter px-4 py-4 sm:px-6"
-                >
-        <span class="w-9/10 pr-8">
-          <h4
-                  class="font-body text-lg font-semibold text-primary dark:text-white"
-          >
-            PostCSS
-          </h4>
-          <p class="font-body font-light text-primary dark:text-white">
-            A tool for transforming CSS with JavaScript
-          </p>
-        </span>
-                    <span class="w-1/10">
-          <img src="{% static 'img/chevron-right.png' %}" class="mx-auto" alt="chevron right"/>
         </span>
                 </a>
 
