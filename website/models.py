@@ -11,8 +11,8 @@ class Contact(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['created_at']
-        get_latest_by = ['updated_at']
+        ordering = ['-created_at']
+        get_latest_by = ['created_at']
 
     def __str__(self):
         return self.name
