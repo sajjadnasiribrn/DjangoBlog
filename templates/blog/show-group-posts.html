@@ -1,0 +1,28 @@
+<div class="pt-8">
+    {% for post in posts %}
+        <div class="{% if not forloop.last %} border-b {% endif %} border-grey-lighter py-8">
+        {% for category in post.categories.all %}
+        <span
+                class="mb-4 inline-block rounded-full bg-green-light px-2 py-1 font-body text-sm text-green"
+        >
+            {{ category.name }}
+        </span>
+        {% endfor %}
+        <a
+                href="{{ post.get_absolute_url }}"
+                class="block font-body text-lg font-semibold text-primary transition-colors hover:text-green dark:text-white dark:hover:text-secondary"
+        >
+           {{ post.title }}
+        </a>
+        <div class="flex items-center pt-4">
+            <p class="pr-2 font-body font-light text-primary dark:text-white">
+                {{ post.jalali_created_at }}
+            </p>
+            <span class="font-body text-grey dark:text-white px-1.5">//</span>
+            <p class="pl-2 font-body font-light text-primary dark:text-white">
+                {{ post.min_read }} دقیقه
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>

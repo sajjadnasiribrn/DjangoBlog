@@ -1,0 +1,83 @@
+{% extends "../_base.html" %}
+{% load static %}
+{% load blog_tags %}
+
+{% block content %}
+
+    <div>
+        <div class="container mx-auto">
+            <div class="py-16 lg:py-20">
+                <div>
+                    <span class="mdi mdi-newspaper-variant-outline text-6xl text-yellow-dark"></span>
+                </div>
+
+                <h1
+                        class="pt-5 font-body text-4xl font-semibold text-primary dark:text-white md:text-2xl lg:text-3xl"
+                >
+                    همه نوشته ها
+                </h1>
+
+                <div class="pt-6 sm:w-3/4">
+                    <p class="font-body text-xl font-light text-primary dark:text-white">
+                        جست و جو در نوشته ها و دسته بندی ها:
+                    </p>
+                </div>
+
+                <form class="flex flex-col py-4 sm:flex-row">
+                    <input
+                            type="email"
+                            id="subscribe"
+                            placeholder="عبارت مورد نظر را وارد کنید..."
+                            class="w-full border border-primary bg-grey-lightest px-5 py-4 font-body font-light text-primary placeholder-primary transition-colors focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary dark:border-secondary sm:w-1/2"
+                    />
+                    <button
+                            type="submit"
+                            class="mt-5 bg-secondary px-10 py-4 font-body text-xl font-semibold text-white hover:bg-green sm:mt-0 md:text-2xl"
+                    >
+                        جست و جو
+                    </button>
+                </form>
+
+                <div class="pt-8 lg:pt-12">
+
+                    {% include "blog/show-group-posts.html" with posts=posts %}
+
+                </div>
+
+                <div class="flex justify-center items-center pt-8 lg:pt-16 space-x-4 space-x-reverse">
+                    {% for page_number in range %}
+                       {% if page_number|is_digit %}
+                        <a  href="{% url "blog:all-posts" %}?page={{ current_page }}&per_page={{ per_page }}"
+                                class="cursor-pointer border-2 border-primary px-3 py-1
+                         font-body font-medium text-primary transition-colors hover:border-secondary
+                          hover:text-secondary dark:border-green-light dark:text-white
+                          dark:hover:border-secondary dark:hover:text-secondary
+                          {% if page_number == current_page %} text-secondary border-secondary {% endif %}
+                          ">
+                            {{ page_number }}
+                        </a>
+                         {% else %}
+                           <span class="cursor-not-allowed px-2 py-1
+                         font-body font-medium text-primary transition-colors hover:border-secondary
+                          hover:text-secondary dark:border-green-light dark:text-white
+                          dark:hover:border-secondary dark:hover:text-secondary
+                          {% if page_number == current_page %} text-secondary border-secondary {% endif %}">
+                            {{ page_number }}
+                        </span>
+                         {% endif %}
+                    {% endfor %}
+
+
+{#                    <span#}
+{#                            class="group flex cursor-pointer items-center border-2 border-primary px-3 py-1 font-body font-medium text-primary transition-colors hover:border-secondary hover:text-secondary dark:border-green-light dark:text-white dark:hover:border-secondary dark:hover:text-secondary"#}
+{#                    >Next#}
+{#        <i#}
+{#                class="bx bx-right-arrow-alt ml-1 text-primary transition-colors group-hover:text-secondary dark:text-white"#}
+{#        ></i#}
+{#        ></span>#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

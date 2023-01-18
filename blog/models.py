@@ -2,6 +2,7 @@ from datetime import datetime
 from html import unescape
 
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.db import models
 from django.db.models import F
 from django.shortcuts import get_object_or_404
@@ -14,7 +15,7 @@ import math
 
 class Published(models.Manager):
     def get_queryset(self):
-        return super(Published, self).get_queryset().filter(status='pu')
+        return super(Published, self).get_queryset().filter(status='pu').filter(published_date__lt=datetime.now())
 
 
 # Create your models here.
@@ -57,6 +58,10 @@ class Post(models.Model):
         post.view_count = F('view_count') + 1
         post.save()
         return post
+
+    @classmethod
+    def get_all_posts_with_paginate(cls, per_page: int):
+        return Paginator(cls.objects.all(), per_page)
 
     # ATTRIBUTES
     @property
