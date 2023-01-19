@@ -1,7 +1,9 @@
-from pprint import pprint
+from django.contrib import messages
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
-from django.shortcuts import render, get_object_or_404
-
+from blog.forms import AllPostsForm
 from blog.models import Post
 
 
@@ -11,12 +13,18 @@ def show(request, slug, pid):
 
 
 def all_posts(request):
-    pages = Post.get_all_posts_with_paginate(request.GET.get('per_page', 5))
-    current_page = request.GET.get('page', 1)
-    page = pages.get_page(current_page)
-    return render(request, 'blog/all-posts.html', {
-        'posts': page.object_list,
-        'range': list(pages.get_elided_page_range(current_page, on_each_side=1, on_ends=2)),
-        'current_page': page.number,
-        'per_page': pages.per_page
-    })
+    form = AllPostsForm(request.GET)
+    if form.is_valid():
+        data = form.cleaned_data
+        pages = Post.get_all_posts_with_paginate_and_search(data['per_page'], data['query'])
+        page = pages.get_page(data['page'])
+        return render(request, 'blog/all-posts.html', {
+            'posts': page.object_list,
+            'range': list(pages.get_elided_page_range(data['page'], on_each_side=1, on_ends=1)),
+            'current_page': page.number,
+            'per_page': pages.per_page,
+            'query': data['query']
+        })
+    else:
+        messages.add_message(request, messages.ERROR, form.errors['query'])
+        return redirect(reverse('blog:all-posts'))

@@ -4,7 +4,7 @@ from html import unescape
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db import models
-from django.db.models import F
+from django.db.models import F, Q
 from django.shortcuts import get_object_or_404
 from django_ckeditor_5.fields import CKEditor5Field
 from jalali_date import datetime2jalali
@@ -60,8 +60,15 @@ class Post(models.Model):
         return post
 
     @classmethod
-    def get_all_posts_with_paginate(cls, per_page: int):
-        return Paginator(cls.objects.all(), per_page)
+    def get_all_posts_with_paginate_and_search(cls, per_page: int, query: str):
+        builder = cls.objects.all()
+        if query:
+            builder = builder.filter(
+                Q(title__contains=query) |
+                Q(content__contains=query) |
+                Q(categories__name__contains=query)
+            ).distinct()
+        return Paginator(builder, per_page)
 
     # ATTRIBUTES
     @property
