@@ -7,7 +7,7 @@
                 class="mdi mdi-close absolute top-0 left-0 mt-4 ml-4 text-4xl text-white"
                 @click="isMobileMenuOpen = false"
         ></i>
-        <ul class="mt-8 flex flex-col">
+        <ul class="pt-10 space-y-3 flex flex-col">
 
             <li class="">
                 <a
@@ -27,7 +27,7 @@
 
             <li class="">
                 <a
-                        href="/uses"
+                        href="{% url "website:contact" %}"
                         class="mb-3 block px-2 font-body text-lg font-medium text-white"
                 >تماس با ما</a
                 >

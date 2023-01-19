@@ -1,0 +1,140 @@
+{% extends "../_base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div>
+        <div class="container mx-auto">
+            <div class="py-16 lg:py-20">
+                <div>
+                    <span class="mdi mdi-card-account-mail-outline text-yellow-dark text-6xl"></span>
+                </div>
+                <h1
+                        class="pt-6 font-body text-4xl font-semibold text-primary dark:text-white md:text-3xl lg:text-4xl"
+                >
+                    تماس با ما
+                </h1>
+                <div class="pr-2 pt-4">
+                    <p class="font-body text-lg font-light text-primary dark:text-white">
+                        سوال یا پیشنهادی دارید یا فقط می خواهید سلام کنید؟ بفرمایید:
+                    </p>
+                </div>
+                {% if form.errors %}
+                    <div class="mt-8">
+                        <ul>
+                            {% for field in form %}
+                                {% if field.errors %}
+                                    {% for error in field.errors %}
+                                        <a href="#{{ field.name }}" class="bg-red-light border-t border-b border-red text-primary px-4 py-3 my-2 flex justify-center items-center"
+                                             role="alert">
+                                            <span href="#{{ field.name }}" class="text-sm">{{ error|escape }}</span>
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% if form.non_field_errors %}
+                            {{ form.non_field_errors }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <form class="pt-16" action="{% url 'website:contact' %}" method="post">
+                    {% csrf_token %}
+                    <div class="flex flex-col sm:flex-row justify-between">
+                        <div class="w-full sm:mr-3 sm:w-5/12">
+                            <label
+                                    class="block pb-3 font-body font-medium text-primary dark:text-white"
+                            >
+                                نام
+                            </label>
+                            <input
+                                    type="text"
+                                    name="name"
+                                    autocomplete="on"
+                                    id="name"
+                                    class="w-full border border-primary bg-grey-lightest px-5 py-4 font-body font-light text-primary placeholder-primary transition-colors focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
+                            />
+                        </div>
+                        <div class="w-full pt-6 sm:ml-3 sm:w-5/12 sm:pt-0">
+                            <label
+                                    class="block pb-3 font-body font-medium text-primary dark:text-white"
+                            >آدرس ایمیل</label
+                            >
+                            <input
+                                    type="email"
+                                    name="email"
+                                    autocomplete="on"
+                                    id="email"
+                                    class="w-full border border-primary bg-grey-lightest px-5 py-4 font-body font-light text-primary placeholder-primary transition-colors focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
+                            />
+                        </div>
+                    </div>
+                    <div class="w-full pt-6 sm:pt-10">
+                        <label
+                                class="block pb-3 font-body font-medium text-primary dark:text-white"
+                        >متن پیام</label
+                        >
+                        <textarea
+                                name="message"
+                                autocomplete="on"
+                                id="message"
+                                cols="30"
+                                rows="9"
+                                class="w-full border border-primary bg-grey-lightest px-5 py-4 font-body font-light text-primary placeholder-primary transition-colors focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
+                        ></textarea>
+                    </div>
+                    <div class="flex w-full items-center justify-center">
+                        <button
+                                class="mt-10 mb-12 block bg-secondary px-10 py-4 text-center font-body text-xl font-semibold text-white transition-colors hover:bg-green sm:inline-block sm:text-left sm:text-2xl"
+                        >
+                            ارسال پیام
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+            {% if messages %}
+                {% for message in messages %}
+            <div class="absolute right-0 top-0 m-8"
+                             x-data="snackBar()"
+                             x-show="show"
+                             x-init="end()"
+                             x-transition:enter="transition ease-out duration-500"
+                             x-transition:enter-start="opacity-0 transform scale-90"
+                             x-transition:enter-end="opacity-100 transform scale-100"
+                             x-transition:leave="transition ease-in duration-500"
+                             x-transition:leave-start="opacity-100 transform scale-100"
+                             x-transition:leave-end="opacity-0 transform scale-90"
+                        >
+                            <div
+                                class="rounded flex items-center bg-green border-r-4 border-green-dark py-2.5 px-3.5
+                             shadow-md mb-2"
+                            >
+                                <!-- icons -->
+                                <div class="text-white mr-1">
+                                    <span class="mdi mdi-check text-2xl"></span>
+                                </div>
+                                <!-- message -->
+                                <div class="text-white text-sm mr-2">
+                                   {{ message|safe }}
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+            {% endif %}
+
+<script>
+    function snackBar() {
+        return {
+            show:true,
+            end() {
+                setTimeout(()=>{
+                    this.show=false;
+                },3000)
+            },
+        }
+    }
+</script>
+{% endblock %}
