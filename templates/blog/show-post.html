@@ -32,7 +32,10 @@
 
             {% if post.image %}
             <div class="flex justify-center items-center pt-5 sm:pt-8">
-                    <img class="object-contain max-w-sm lg:max-w-xl rounded-md" src="{{ post.image.url }}">
+                    <img class="object-contain max-w-sm lg:max-w-xl rounded-md"
+                         alt="{{ post.title }}"
+                         src="{{ post.image.url }}"
+                    >
                 </div>
             {% endif %}
 
@@ -45,5 +48,9 @@
             </div>
         </div>
     </div>
-
+<style>
+div.prose > * {
+    line-height: 2.15em;
+}
+</style>
 {% endblock content %}

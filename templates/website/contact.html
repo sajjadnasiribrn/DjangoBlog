@@ -95,7 +95,7 @@
         </div>
     </div>
 
-            {% if messages %}
+     {% if messages %}
                 {% for message in messages %}
             <div class="absolute right-0 top-0 m-8"
                              x-data="snackBar()"
@@ -132,7 +132,7 @@
             end() {
                 setTimeout(()=>{
                     this.show=false;
-                },3000)
+                },4000)
             },
         }
     }

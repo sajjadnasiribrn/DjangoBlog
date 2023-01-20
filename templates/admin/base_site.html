@@ -5,4 +5,13 @@
 {% block extrastyle %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'src/fonts.css' %}">
+    <style>
+    div.ck > * {
+    font-family: "iranyekan",serif !important;
+    font-weight: 200;
+    font-style: normal;
+    font-size:18px;
+    line-height: 40px !important;
+    }
+    </style>
 {% endblock %}

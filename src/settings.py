@@ -26,6 +26,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# SITE
+SITE_ID = 2
+
+# ROBOTS>TXT
+ROBOTS_USE_HOST = False
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +45,12 @@ INSTALLED_APPS = [
     'blog',
     'compressor',
     'django_ckeditor_5',
-    'jalali_date'
+    'jalali_date',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'robots',
+    'debug_toolbar',
+    'taggit'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +61,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+# DEBUG BAR
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
 ]
 
 ROOT_URLCONF = 'src.urls'

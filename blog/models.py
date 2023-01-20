@@ -11,6 +11,7 @@ from jalali_date import datetime2jalali
 from django.urls import reverse
 from django.utils.html import strip_tags
 import math
+from taggit.managers import TaggableManager
 
 
 class Published(models.Manager):
@@ -35,6 +36,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = CKEditor5Field('Text', config_name='extends')
     slug = models.SlugField(max_length=255, unique=True)
+    tags = TaggableManager()
     image = models.ImageField(upload_to='blog/', max_length=5000, null=True, blank=True)
     view_count = models.IntegerField(default=0)
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.PUBLISHED)
@@ -61,7 +63,7 @@ class Post(models.Model):
 
     @classmethod
     def get_all_posts_with_paginate_and_search(cls, per_page: int, query: str):
-        builder = cls.objects.all()
+        builder = cls.objects.all().prefetch_related('categories')
         if query:
             builder = builder.filter(
                 Q(title__contains=query) |
