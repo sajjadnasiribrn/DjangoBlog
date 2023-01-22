@@ -52,11 +52,30 @@
                     <div
                             class="absolute left-0 bottom-0 z-20 h-0 w-full opacity-75 transition-all group-hover:h-2 group-hover:bg-yellow"
                     ></div>
-                    <a
-                            href="/uses"
-                            class="relative z-30 block px-2 font-body text-base font-medium text-primary transition-colors group-hover:text-green dark:text-white dark:group-hover:text-secondary"
-                    >ورود / ثبت نام</a
-                    >
+                    {% if not request.user.is_authenticated %}
+                        <a
+                                href="{% url "auth:login-or-register" %}"
+                                class="relative z-30 block px-2 font-body text-base font-medium text-primary transition-colors group-hover:text-green dark:text-white dark:group-hover:text-secondary"
+                        >ورود / ثبت نام</a>
+                    {% else %}
+
+                        <a      onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                class="flex flex-row items-center justify-center cursor-pointer px-2 relative z-30 block text-base font-medium text-primary transition-colors group-hover:text-green dark:text-white dark:group-hover:text-secondary">
+
+                        <span>{{ request.user.username }} -> </span>
+
+                        <span class="flex items-center px-1 cursor-pointer lg:my-0"
+                        >
+                            خروج
+                        </span>
+                        <form id="logout-form" action="{% url "auth:logout" %}" method="POST" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+
+                        </a>
+
+
+                    {% endif %}
                 </li>
 
                 <li class="mr-4" :title="isDarkMode ? 'حالت روز' : 'حالت شب'">

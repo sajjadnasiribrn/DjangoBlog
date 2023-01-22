@@ -23,7 +23,8 @@ def all_posts(request):
             'range': list(pages.get_elided_page_range(data['page'], on_each_side=1, on_ends=1)),
             'current_page': page.number,
             'per_page': pages.per_page,
-            'query': data['query']
+            'query': data['query'],
+            'page_count': pages.num_pages
         })
     else:
         messages.add_message(request, messages.ERROR, form.errors['query'])

@@ -1,5 +1,6 @@
 {% extends "../_base.html" %}
 {% load static %}
+{% load website_tags %}
 
 {% block content %}
 
@@ -25,8 +26,9 @@
                             {% for field in form %}
                                 {% if field.errors %}
                                     {% for error in field.errors %}
-                                        <a href="#{{ field.name }}" class="bg-red-light border-t border-b border-red text-primary px-4 py-3 my-2 flex justify-center items-center"
-                                             role="alert">
+                                        <a href="#{{ field.name }}"
+                                           class="bg-red-light border-t border-b border-red text-primary px-4 py-3 my-2 flex justify-center items-center"
+                                           role="alert">
                                             <span href="#{{ field.name }}" class="text-sm">{{ error|escape }}</span>
                                         </a>
                                     {% endfor %}
@@ -49,6 +51,7 @@
                             </label>
                             <input
                                     type="text"
+                                    value="{% if old_value %}{{ old_value.name }}{% elif request.user.is_authenticated %}{{ request.user.username }}{% endif %}"
                                     name="name"
                                     autocomplete="on"
                                     id="name"
@@ -61,6 +64,7 @@
                             >آدرس ایمیل</label
                             >
                             <input
+                                    value="{% if old_value %}{{ old_value.email }} {% elif request.user.is_authenticated %}{{ request.user.email }} {% endif %}"
                                     type="email"
                                     name="email"
                                     autocomplete="on"
@@ -81,7 +85,7 @@
                                 cols="30"
                                 rows="9"
                                 class="w-full border border-primary bg-grey-lightest px-5 py-4 font-body font-light text-primary placeholder-primary transition-colors focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
-                        ></textarea>
+                        >{% if old_value %}{{old_value.message|safe}}{% endif %}</textarea>
                     </div>
                     <div class="flex w-full items-center justify-center">
                         <button
@@ -95,46 +99,48 @@
         </div>
     </div>
 
-     {% if messages %}
-                {% for message in messages %}
-            <div class="absolute right-0 top-0 m-8"
-                             x-data="snackBar()"
-                             x-show="show"
-                             x-init="end()"
-                             x-transition:enter="transition ease-out duration-500"
-                             x-transition:enter-start="opacity-0 transform scale-90"
-                             x-transition:enter-end="opacity-100 transform scale-100"
-                             x-transition:leave="transition ease-in duration-500"
-                             x-transition:leave-start="opacity-100 transform scale-100"
-                             x-transition:leave-end="opacity-0 transform scale-90"
-                        >
-                            <div
-                                class="rounded flex items-center bg-green border-r-4 border-green-dark py-2.5 px-3.5
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="fixed right-0 top-0 m-8"
+                     x-data="snackBar()"
+                     x-show="show"
+                     x-init="end()"
+                     x-transition:enter="transition ease-out duration-500"
+                     x-transition:enter-start="opacity-0 transform scale-90"
+                     x-transition:enter-end="opacity-100 transform scale-100"
+                     x-transition:leave="transition ease-in duration-500"
+                     x-transition:leave-start="opacity-100 transform scale-100"
+                     x-transition:leave-end="opacity-0 transform scale-90"
+                >
+                    <div
+                            class="rounded flex items-center bg-green border-r-4 border-green-dark py-2.5 px-3.5
                              shadow-md mb-2"
-                            >
-                                <!-- icons -->
-                                <div class="text-white mr-1">
-                                    <span class="mdi mdi-check text-2xl"></span>
-                                </div>
-                                <!-- message -->
-                                <div class="text-white text-sm mr-2">
-                                   {{ message|safe }}
-                                </div>
-                            </div>
+                    >
+                        <!-- icons -->
+                        <div class="text-white mr-1">
+                            <span class="mdi mdi-check text-2xl"></span>
                         </div>
-                {% endfor %}
+                        <!-- message -->
+                        <div class="text-white text-sm mr-2">
+                            {{ message|safe }}
+                        </div>
+                    </div>
+                </div>
             {% endif %}
+        {% endfor %}
+    {% endif %}
 
-<script>
-    function snackBar() {
-        return {
-            show:true,
-            end() {
-                setTimeout(()=>{
-                    this.show=false;
-                },4000)
-            },
+    <script>
+        function snackBar() {
+            return {
+                show: true,
+                end() {
+                    setTimeout(() => {
+                        this.show = false;
+                    }, 4000)
+                },
+            }
         }
-    }
-</script>
+    </script>
 {% endblock %}

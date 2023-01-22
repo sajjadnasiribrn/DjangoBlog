@@ -1,0 +1,50 @@
+{% load compress %}
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود / ثبت نام - سوتا</title>
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css"
+    />
+
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+
+    <link rel="stylesheet" href="{% static 'src/fonts.css' %}">
+
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body
+        x-data="global()"
+        x-init="themeInit()"
+        :class="isMobileMenuOpen ? 'max-h-screen overflow-hidden relative' : ''"
+        class="dark:bg-primary"
+        dir="rtl"
+>
+<div class="w-full mx-auto font-body">
+    <div id="main">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</div>
+
+<script src="{% static 'src/main.js' %}"></script>
+</body>
+
+</html>

@@ -7,7 +7,7 @@
     <div x-data
          x-init="setTimeout(()=>{
                  document.getElementById('here').scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
-                 },500)"
+                 },800)"
     >
         <div class="container mx-auto">
             <div class="py-16">
@@ -45,7 +45,9 @@
                 </form>
                     {% if messages %}
                     {% for message in messages %}
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
                       <div class="text-red">{{ message|safe }}</div>
+                        {% endif %}
                     {% endfor %}
                      {% endif %}
 
@@ -89,5 +91,50 @@
             </div>
         </div>
     </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="fixed right-0 top-0 m-8"
+                     x-data="snackBar()"
+                     x-show="show"
+                     x-init="end()"
+                     x-transition:enter="transition ease-out duration-500"
+                     x-transition:enter-start="opacity-0 transform scale-90"
+                     x-transition:enter-end="opacity-100 transform scale-100"
+                     x-transition:leave="transition ease-in duration-500"
+                     x-transition:leave-start="opacity-100 transform scale-100"
+                     x-transition:leave-end="opacity-0 transform scale-90"
+                >
+                    <div
+                            class="rounded flex items-center bg-green border-r-4 border-green-dark py-2.5 px-3.5
+                             shadow-md mb-2"
+                    >
+                        <!-- icons -->
+                        <div class="text-white mr-1">
+                            <span class="mdi mdi-check text-2xl"></span>
+                        </div>
+                        <!-- message -->
+                        <div class="text-white text-sm mr-2">
+                            {{ message|safe }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <script>
+        function snackBar() {
+            return {
+                show: true,
+                end() {
+                    setTimeout(() => {
+                        this.show = false;
+                    }, 4000)
+                },
+            }
+        }
+    </script>
 
 {% endblock %}

@@ -12,13 +12,12 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def contact(request: HttpRequest) -> HttpResponse:
     context = {}
-    print(request.POST)
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'پیام شما با موفقیت دریافت شد.')
         else:
-            context.update({'form': form})
+            context.update({'form': form, 'old_value': request.POST})
 
     return render(request, 'website/contact.html', context=context)

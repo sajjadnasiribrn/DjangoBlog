@@ -50,8 +50,33 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'robots',
     'debug_toolbar',
-    'taggit'
+    'taggit',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+# ALL AUTH
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -316,7 +341,7 @@ CKEDITOR_5_CONFIGS = {
 }
 
 JALALI_DATE_DEFAULTS = {
-   'Strftime': {
+    'Strftime': {
         'date': '%y/%m/%d',
         'datetime': '%H:%M:%S _ %y/%m/%d',
     },
@@ -338,3 +363,5 @@ JALALI_DATE_DEFAULTS = {
         }
     },
 }
+
+LOGIN_URL = '/auth'
