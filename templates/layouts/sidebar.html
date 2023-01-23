@@ -10,11 +10,28 @@
         <ul class="pt-10 space-y-3 flex flex-col">
 
             <li class="">
+                {% if not request.user.is_authenticated %}
                 <a
-                        href="{% url "auth:login-or-register" %}"
+                        href="{% url "customuser:login-or-register" %}"
                         class="mb-3 block px-2 font-body text-lg font-medium text-white"
                 >ورود / ثبت نام</a
                 >
+                    {% else %}
+                    <a      onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                class="mb-3 block px-2 font-body text-lg font-medium text-white">
+
+                        <span>{{ request.user.username }} -> </span>
+
+                        <span class="flex items-center"
+                        >
+                            خروج
+                        </span>
+                        <form id="logout-form" action="{% url "customuser:logout" %}" method="POST" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+
+                        </a>
+                {% endif %}
             </li>
 
             <li class="">

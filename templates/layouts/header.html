@@ -54,7 +54,7 @@
                     ></div>
                     {% if not request.user.is_authenticated %}
                         <a
-                                href="{% url "auth:login-or-register" %}"
+                                href="{% url "customuser:login-or-register" %}"
                                 class="relative z-30 block px-2 font-body text-base font-medium text-primary transition-colors group-hover:text-green dark:text-white dark:group-hover:text-secondary"
                         >ورود / ثبت نام</a>
                     {% else %}
@@ -68,7 +68,7 @@
                         >
                             خروج
                         </span>
-                        <form id="logout-form" action="{% url "auth:logout" %}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{% url "customuser:logout" %}" method="POST" style="display: none;">
                             {% csrf_token %}
                         </form>
 

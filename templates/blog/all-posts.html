@@ -7,7 +7,7 @@
     <div x-data
          x-init="setTimeout(()=>{
                  document.getElementById('here').scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
-                 },800)"
+                 },700)"
     >
         <div class="container mx-auto">
             <div class="py-16">
@@ -16,10 +16,9 @@
                 </div>
 
                 <h1 id="here"
-                        class="pt-5 font-body text-4xl font-semibold text-primary dark:text-white md:text-2xl lg:text-3xl"
+                        class="pt-5 font-body flex items-center text-3xl font-semibold text-primary dark:text-white md:text-2xl lg:text-3xl"
                 >
-                    همه نوشته ها
-                </h1>
+                    همه نوشته ها | <span class="text-lg mr-1.5">صفحه {{ current_page }} از {{ page_count }}</span></h1>
 
                 <div class="pt-6 sm:w-3/4">
                     <p class="font-body text-xl font-light text-primary dark:text-white">

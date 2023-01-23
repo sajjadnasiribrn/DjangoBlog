@@ -3,14 +3,14 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_GET
 from django.shortcuts import render, redirect
-from auth.middlewares import guest
+from customuser.middlewares import guest
 
 
 # Create your views here.
 @require_GET
 @guest
 def login_or_register(request):
-    return render(request, 'auth/login-or-register.html')
+    return render(request, 'customuser/login-or-register.html')
 
 
 @login_required

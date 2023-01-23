@@ -27,7 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # SITE
-SITE_ID = 2
+SITE_ID = 3
 
 # ROBOTS>TXT
 ROBOTS_USE_HOST = False
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website',
     'blog',
+    'customuser',
     'compressor',
     'django_ckeditor_5',
     'jalali_date',
@@ -56,6 +57,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
+
+# CUSTOM USER
+AUTH_USER_MODEL = 'customuser.User'
 
 # ALL AUTH
 SOCIALACCOUNT_LOGIN_ON_GET = True
