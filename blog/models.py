@@ -1,6 +1,7 @@
 from datetime import datetime
 from html import unescape
 
+from blog.middlewares import get_request
 from customuser.models import User
 from django.core.paginator import Paginator
 from django.db import models
@@ -71,6 +72,16 @@ class Post(models.Model):
                 Q(categories__name__contains=query)
             ).distinct()
         return Paginator(builder, per_page)
+
+    def attach_bookmarks(self):
+        get_request().user.bookmarks.add(self)
+
+    def detach_bookmarks(self):
+        get_request().user.bookmarks.remove(self)
+
+    @property
+    def is_bookmarked(self):
+        return User.objects.filter(bookmarks=self).filter(bookmarks__user=get_request().user).exists()
 
     # ATTRIBUTES
     @property

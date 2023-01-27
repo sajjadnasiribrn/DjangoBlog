@@ -1,9 +1,11 @@
 from django.contrib import messages
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
-from blog.forms import AllPostsForm
+from blog.forms import AllPostsForm, BookmarkForm
 from blog.models import Post
 
 
@@ -29,3 +31,22 @@ def all_posts(request):
     else:
         messages.add_message(request, messages.ERROR, form.errors['query'])
         return redirect(reverse('blog:all-posts'))
+
+
+@login_required
+@require_POST
+def bookmark(request):
+    form = BookmarkForm(request.POST)
+    if form.is_valid():
+        data = form.cleaned_data
+        post = data['post']
+        is_bookmarked = data['is_bookmarked']
+        print(is_bookmarked)
+        if is_bookmarked:
+            post.detach_bookmarks()
+        else:
+            post.attach_bookmarks()
+        return redirect(post.get_absolute_url())
+
+    else:
+        return HttpResponseBadRequest(form.errors)

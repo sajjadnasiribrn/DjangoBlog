@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <div class="container mx-auto">
+    <div class="container mx-auto" x-data="contactForm()">
         <div class="pt-16 lg:pt-20">
             <div class="border-b border-grey-lighter border-dashed pb-8 sm:pb-12">
                 {% for category in post.categories.all %}
@@ -47,10 +47,27 @@
                 {{ post.content|safe }}
             </div>
         </div>
+
+        <div class="fixed bottom-4 left-4 lg:left-1/2">
+      <button class="relative group" onclick="event.preventDefault(); document.getElementById('bookmark-form').submit();">
+        <div class="relative flex overflow-hidden items-center justify-center rounded-full w-[55px] h-[55px]
+         transform transition-all bg-green ring-0 ring-offset-green hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
+          <div class="flex justify-center items-center w-[25px] h-[25px] transform transition-all duration-500 origin-center overflow-hidden">
+            <span class="mdi {% if not post.is_bookmarked %}mdi-bookmark-outline{% else %}mdi-bookmark{% endif %} text-3xl text-white text-center">
+            </span>
+          </div>
+        </div>
+      </button>
+            <form id="bookmark-form" action="{% url "blog:bookmark" %}" method="POST" style="display: none;">
+                            {% csrf_token %}
+                <input name="post" value="{{ post.id }}">
+                <input type="checkbox" name="is_bookmarked" value="{{ post.is_bookmarked }}" checked="{{ post.is_bookmarked }}">
+            </form>
     </div>
-<style>
-div.prose > * {
-    line-height: 2.15em;
-}
-</style>
+    </div>
+    <style>
+    div.prose > * {
+        line-height: 2.15em;
+    }
+    </style>
 {% endblock content %}
