@@ -1,9 +1,10 @@
 {% extends "../_base.html" %}
+{% load comment-tags %}
 {% load static %}
 
 {% block content %}
 
-    <div class="container mx-auto" x-data="contactForm()">
+    <div class="container mx-auto">
         <div class="pt-16 lg:pt-20">
             <div class="border-b border-grey-lighter border-dashed pb-8 sm:pb-12">
                 {% for category in post.categories.all %}
@@ -30,44 +31,119 @@
                     </p>
                 </div>
 
-            {% if post.image %}
-            <div class="flex justify-center items-center pt-5 sm:pt-8">
-                    <img class="object-contain max-w-sm lg:max-w-xl rounded-md"
-                         alt="{{ post.title }}"
-                         src="{{ post.image.url }}"
-                    >
-                </div>
-            {% endif %}
+                {% if post.image %}
+                    <div class="flex justify-center items-center pt-5 sm:pt-8">
+                        <img class="object-contain max-w-sm lg:max-w-xl rounded-md"
+                             alt="{{ post.title }}"
+                             src="{{ post.image.url }}"
+                        >
+                    </div>
+                {% endif %}
 
             </div>
-
             <div
                     class="prose prose max-w-none border-b border-grey-lighter py-8 dark:prose-dark sm:py-12"
             >
                 {{ post.content|safe }}
             </div>
+            <form class="pt-16" action="{% url 'comment:create' post.id post.slug %}" method="POST">
+                {% csrf_token %}
+                <div class="w-full">
+                    <textarea
+                            name="body"
+                            required
+                            autocomplete="on"
+                            id="message"
+                            cols="30"
+                            rows="9"
+                            class="w-full border border-primary bg-grey-lightest px-5 py-4 font-body font-light text-primary placeholder-primary transition-colors focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
+                    ></textarea>
+                </div>
+                <div class="flex w-full items-center justify-center">
+                    <button
+                            class="mt-10 mb-12 block bg-secondary px-10 py-4 text-center font-body text-xl font-semibold text-white transition-colors hover:bg-green sm:inline-block sm:text-left sm:text-2xl"
+                    >
+                        ارسال نظر
+                    </button>
+                </div>
+            </form>
+
+        {% get_comments post=post request=request %}
+
         </div>
 
         <div class="fixed bottom-4 left-4 lg:left-1/2">
-      <button class="relative group" onclick="event.preventDefault(); document.getElementById('bookmark-form').submit();">
-        <div class="relative flex overflow-hidden items-center justify-center rounded-full w-[55px] h-[55px]
+            <a class="relative group cursor-pointer"
+               {% if  request.user.is_authenticated %}
+               onclick="event.preventDefault(); document.getElementById('bookmark-form').submit();"
+               {% else %}
+               href="{% url "customuser:login-or-register" %}?next={{ post.get_absolute_url }}"
+               {% endif %}>
+                <div class="relative flex overflow-hidden items-center justify-center rounded-full w-[55px] h-[55px]
          transform transition-all bg-green ring-0 ring-offset-green hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
-          <div class="flex justify-center items-center w-[25px] h-[25px] transform transition-all duration-500 origin-center overflow-hidden">
+                    <div class="flex justify-center items-center w-[25px] h-[25px] transform transition-all duration-500 origin-center overflow-hidden">
             <span class="mdi {% if not post.is_bookmarked %}mdi-bookmark-outline{% else %}mdi-bookmark{% endif %} text-3xl text-white text-center">
             </span>
-          </div>
-        </div>
-      </button>
+                    </div>
+                </div>
+            </a>
             <form id="bookmark-form" action="{% url "blog:bookmark" %}" method="POST" style="display: none;">
-                            {% csrf_token %}
+                {% csrf_token %}
                 <input name="post" value="{{ post.id }}">
-                <input type="checkbox" name="is_bookmarked" value="{{ post.is_bookmarked }}" checked="{{ post.is_bookmarked }}">
+                <input type="checkbox" name="is_bookmarked" value="{{ post.is_bookmarked }}"
+                       checked="{{ post.is_bookmarked }}">
             </form>
+        </div>
     </div>
-    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="fixed right-0 top-0 m-8"
+                     x-data="snackBar()"
+                     x-show="show"
+                     x-init="end()"
+                     x-transition:enter="transition ease-out duration-500"
+                     x-transition:enter-start="opacity-0 transform scale-90"
+                     x-transition:enter-end="opacity-100 transform scale-100"
+                     x-transition:leave="transition ease-in duration-500"
+                     x-transition:leave-start="opacity-100 transform scale-100"
+                     x-transition:leave-end="opacity-0 transform scale-90"
+                >
+                    <div
+                            class="rounded flex items-center bg-green border-r-4 border-green-dark py-2.5 px-3.5
+                             shadow-md mb-2"
+                    >
+                        <!-- icons -->
+                        <div class="text-white mr-1">
+                            <span class="mdi mdi-check text-2xl"></span>
+                        </div>
+                        <!-- message -->
+                        <div class="text-white text-sm mr-2">
+                            {{ message|safe }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <script>
+        function snackBar() {
+            return {
+                show: true,
+                end() {
+                    setTimeout(() => {
+                        this.show = false;
+                    }, 4000)
+                },
+            }
+        }
+    </script>
+
     <style>
-    div.prose > * {
-        line-height: 2.15em;
-    }
+        div.prose > * {
+            line-height: 2.15em;
+        }
     </style>
 {% endblock content %}

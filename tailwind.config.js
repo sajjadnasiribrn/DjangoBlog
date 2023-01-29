@@ -17,6 +17,8 @@ module.exports = {
 
     colors: {
       transparent: "transparent",
+      "teal-50": "#f0fdfa",
+      "teal-100": "#ccfbf1",
       red: "#FF0000",
       "red-light": "#ffc6c4",
       primary: "#072344",
@@ -29,7 +31,8 @@ module.exports = {
       "blue-dark": "#072344",
       black: "#000000",
       white: "#ffffff",
-      "yellow-lighter": "#f6e8c6",
+      "yellow-lighter": "#fef9c3",
+      "yellow-lightest": "#fefce8",
       "yellow-light": "#f8edd0",
       yellow: "#f4d06f",
       "yellow-dark": "#daa512",

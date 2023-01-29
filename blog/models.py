@@ -57,7 +57,8 @@ class Post(models.Model):
     # CLASS METHODS
     @classmethod
     def get_single_post(cls, slug: str, pk: int):
-        post = get_object_or_404(cls.objects.filter(slug=slug).prefetch_related('categories'), pk=pk)
+        post = get_object_or_404(
+            cls.objects.filter(slug=slug).prefetch_related('categories'), pk=pk)
         post.view_count = F('view_count') + 1
         post.save()
         return post
@@ -81,7 +82,11 @@ class Post(models.Model):
 
     @property
     def is_bookmarked(self):
-        return User.objects.filter(bookmarks=self).filter(bookmarks__user=get_request().user).exists()
+        user = get_request().user
+        if user.is_anonymous:
+            return False
+
+        return User.objects.filter(bookmarks=self).filter(id=user.id).exists()
 
     # ATTRIBUTES
     @property
@@ -103,7 +108,7 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        get_latest_by = ['created_at']
+        get_latest_by = ['-created_at']
 
     def __str__(self):
         return self.title

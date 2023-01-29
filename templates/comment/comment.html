@@ -1,0 +1,74 @@
+<div x-data="{ showReply: false, openAreYouSureModal: false }"
+     class="flex flex-col w-full text-base rounded-sm {% if comment.parent %} bg-teal-50 {% else %} bg-teal-100 {% endif %}">
+
+    <div class="flex flex-row w-full mx-3 mt-3 items-center justify-between">
+        <div class="flex flex-row justify-center items-center text-primary">
+            <span class="mdi mdi-account-circle-outline text-5xl"></span>
+            <span class="truncate text-primary mr-1 font-bold" dir="ltr">
+                    {{ comment.author.username }}
+            </span>
+        </div>
+        {% if request.user.is_authenticated %}
+
+            <div class="flex flex-row {% if not comment.parent %} ml-8 {% endif %} ml-4">
+                {% if comment.author.id == request.user.id %}
+                    <a title="حذف نظر"
+                       @click="openAreYouSureModal=true"
+                       class="text-red cursor-pointer ml-3">
+                        <span class="mdi mdi-trash-can text-3xl"></span>
+                    </a>
+                {% endif %}
+
+                {% if not comment.parent %}
+                    <a title="پاسخ"
+                       @click="showReply=!showReply"
+                       class="text-secondary cursor-pointer">
+                        <span class="mdi  mdi-reply-all text-3xl"></span>
+                    </a>
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+    <div class="w-full text-sm lg:text-base break-words px-4 my-2 text-primary leading-relaxed">
+        {{ comment.body|safe }}
+    </div>
+    {% if request.user.is_authenticated %}
+        {% if not comment.parent %}
+            <div class="flex justify-center py-3" x-show="showReply" x-cloak>
+                <form class="flex flex-col w-full justify-center items-center h-auto px-4"
+                      method="POST"
+                      action="{% url 'comment:create' pid=post.id slug=post.slug parent=comment.id %}">
+                    {% csrf_token %}
+                    <textarea class="form-textarea border-4 bg-yellow-lightest w-full"
+                              name="body"
+                              required
+                              placeholder="پاسخی برای این نظر بنویسید..."
+                              rows="7"
+                    ></textarea>
+                    <div class="flex flex-row w-full items-start justify-between mt-3">
+                        <div>
+                        </div>
+                        <div>
+                            <button @click.prevent="showReply=false"
+                                    class="h-10 w-32 bg-secondary rounded-lg text-white ml-2">
+                                <span class="mx-3 font-bold">انصراف</span>
+                            </button>
+                            <button class="h-10 w-32 bg-secondary rounded-lg text-white">
+                                <span class="mx-3 font-bold">ثبت پاسخ</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% include "components/are-you-sure.html" with deletable_id=comment.id delete_route_name="comment:delete" message='از حذف این نظر مطمئن هستید؟' %}
+
+</div>
+
+

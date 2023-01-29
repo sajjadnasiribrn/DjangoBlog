@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'website',
     'blog',
     'customuser',
+    'comment',
     'compressor',
     'django_ckeditor_5',
     'jalali_date',
