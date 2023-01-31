@@ -1,0 +1,64 @@
+{% extends "../_base.html" %}
+{% load static %}
+{% load blog_tags %}
+
+{% block content %}
+
+    <div x-data
+         x-init="setTimeout(()=>{
+                 document.getElementById('here').scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
+                 },700)"
+    >
+        <div class="container mx-auto">
+            <div class="py-16">
+                <div>
+                    <span class="mdi mdi-tag-multiple-outline text-6xl text-yellow-dark"></span>
+                </div>
+
+                <h1 id="here"
+                        class="pt-5 font-body flex items-center text-3xl font-semibold text-primary dark:text-white md:text-2xl lg:text-3xl"
+                >
+                    {{ category.name }} | <span class="text-lg mr-1.5">صفحه {{ current_page }} از {{ page_count }}</span></h1>
+
+                <div class="pt-4">
+
+                    {% include "blog/show-group-posts.html" with posts=posts %}
+
+                </div>
+
+                <div class="flex justify-center items-center pt-8 lg:pt-16 space-x-4 space-x-reverse">
+                    {% for page_number in range %}
+                       {% if page_number|is_digit %}
+                        <a  {% if page_number != current_page %} href="?page={{ page_number }}&per_page={{ per_page }}{% if query %}&query={{ query }}{% endif %}" {% endif %}
+                                class="cursor-pointer border-2 border-primary px-3 py-1
+                         font-body font-medium text-primary transition-colors hover:border-secondary
+                          hover:text-secondary dark:border-green-light dark:text-white
+                          dark:hover:border-secondary dark:hover:text-secondary
+                          {% if page_number == current_page %} dark:text-white dark:bg-secondary text-secondary border-secondary {% endif %}
+                          ">
+                            {{ page_number }}
+                        </a>
+                         {% else %}
+                           <span class="cursor-not-allowed px-2 py-1
+                         font-body font-medium text-primary transition-colors hover:border-secondary
+                          hover:text-secondary dark:border-green-light dark:text-white
+                          dark:hover:border-secondary dark:hover:text-secondary">
+                            {{ page_number }}
+                        </span>
+                         {% endif %}
+                    {% endfor %}
+
+
+{#                    <span#}
+{#                            class="group flex cursor-pointer items-center border-2 border-primary px-3 py-1 font-body font-medium text-primary transition-colors hover:border-secondary hover:text-secondary dark:border-green-light dark:text-white dark:hover:border-secondary dark:hover:text-secondary"#}
+{#                    >Next#}
+{#        <i#}
+{#                class="bx bx-right-arrow-alt ml-1 text-primary transition-colors group-hover:text-secondary dark:text-white"#}
+{#        ></i#}
+{#        ></span>#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

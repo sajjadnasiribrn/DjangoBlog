@@ -28,6 +28,19 @@ class Status(models.TextChoices):
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    tags = TaggableManager()
+    slug = models.SlugField(max_length=255, unique=True, null=True)
+
+    @classmethod
+    def get_category_posts_with_paginate(cls, cid, per_page: int):
+        category = get_object_or_404(cls.objects.all(), pk=cid)
+        return {
+            'posts': Paginator(category.post_set.all(), per_page),
+            'category': category
+        }
+
+    def get_absolute_url(self):
+        return reverse('blog:show-category-posts', kwargs={'slug': self.slug, 'cid': self.id})
 
     def __str__(self):
         return self.name

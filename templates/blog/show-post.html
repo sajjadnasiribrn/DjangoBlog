@@ -9,7 +9,7 @@
             <div class="border-b border-grey-lighter border-dashed pb-8 sm:pb-12">
                 {% for category in post.categories.all %}
                     <a
-                            href="#"
+                            href="{{ category.get_absolute_url }}"
                             class="mb-5 inline-block rounded-full bg-green-light px-2 py-1 font-body text-sm text-green sm:mb-8"
                     >
                         {{ category.name }}

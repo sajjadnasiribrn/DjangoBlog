@@ -1,0 +1,32 @@
+{
+"theme_color": "#007c85",
+"background_color": "#00aaa1",
+"display": "standalone",
+"scope": "/",
+"start_url": "/",
+"short_name": "سوتا",
+"name": "وبلاگ آموزشی - سوتا",
+"description": "وبسایت آموزشی - سوتا",
+"icons": [
+{
+"src": "static/img/logo.svg",
+"sizes": "192x192",
+"type": "svg"
+},
+{
+"src": "static/img/logo.svg",
+"sizes": "256x256",
+"type": "svg"
+},
+{
+"src": "static/img/logo.svg",
+"sizes": "384x384",
+"type": "svg"
+},
+{
+"src": "static/img/logo.svg",
+"sizes": "512x512",
+"type": "svg"
+}
+]
+}

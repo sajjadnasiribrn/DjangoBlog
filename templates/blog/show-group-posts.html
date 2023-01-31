@@ -3,11 +3,11 @@
     {% for post in posts %}
         <div class="{% if not forloop.last %} border-b {% endif %} border-grey-lighter py-8">
         {% for category in post.categories.all %}
-        <span
+        <a href="{{ category.get_absolute_url }}"
                 class="mb-4 inline-block rounded-full bg-green-light px-2 py-1 font-body text-sm text-green"
         >
             {{ category.name }}
-        </span>
+        </a>
         {% endfor %}
         <a
                 href="{{ post.get_absolute_url }}"
