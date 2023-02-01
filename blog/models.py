@@ -5,7 +5,7 @@ from blog.middlewares import get_request
 from customuser.models import User
 from django.core.paginator import Paginator
 from django.db import models
-from django.db.models import F, Q
+from django.db.models import F, Q, Count, Avg, Max, Min
 from django.shortcuts import get_object_or_404
 from django_ckeditor_5.fields import CKEditor5Field
 from jalali_date import datetime2jalali
@@ -30,6 +30,9 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     tags = TaggableManager()
     slug = models.SlugField(max_length=255, unique=True, null=True)
+
+    # created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     @classmethod
     def get_category_posts_with_paginate(cls, cid, per_page: int):
@@ -71,7 +74,13 @@ class Post(models.Model):
     @classmethod
     def get_single_post(cls, slug: str, pk: int):
         post = get_object_or_404(
-            cls.objects.filter(slug=slug).prefetch_related('categories'), pk=pk)
+            cls.objects.filter(slug=slug).prefetch_related('categories').annotate(
+                comments_count=Count('comment'),
+                rate_count=Count('rate'),
+                rate_avg=Avg('rate__rate'),
+                max_rate=Max('rate__rate'),
+                min_rate=Min('rate__rate')
+            ), pk=pk)
         post.view_count = F('view_count') + 1
         post.save()
         return post
@@ -125,3 +134,16 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Rate(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    rate = models.IntegerField(default=5)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(rate__gte=1) & models.Q(rate__lte=5),
+                name="rate value is valid between 1 and 5",
+            )
+        ]

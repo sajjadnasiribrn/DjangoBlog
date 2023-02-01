@@ -8,6 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ورود / ثبت نام - سوتا</title>
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "customuser:login-or-register" %}"/>
+{#    <link rel="next" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}"/>#}
+    <meta property="og:locale" content="fa_IR"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="ورود / ثبت نام - سوتا"/>
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "customuser:login-or-register" %}"/>
+    <meta property="og:site_name" content="آموزش مفاهیم برنامه نویسی و طراحی وب - سوتا"/>
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+    <meta property="og:image:secure_url"
+          content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+    <meta property="og:image:width" content="1280"/>
+    <meta property="og:image:height" content="720"/>
+    <meta property="og:image:type" content="image/svg+xml"/>
 
     <link
             rel="stylesheet"

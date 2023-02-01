@@ -1,9 +1,9 @@
 {% load static %}
-<div class="container mx-auto">
+<nav class="container mx-auto">
     <div class="flex items-center justify-between py-6 lg:py-10">
-        <a href="{% url 'website:home' %}" class="flex items-center">
+        <a href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'website:home' %}" class="flex items-center">
       <span class="mr-2">
-        <img src="{% static 'img/logo.svg' %}" alt="logo"/>
+        <img src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}" alt="logo"/>
       </span>
             <p
                     class="font-body text-2xl font-bold text-primary dark:text-white lg:block mr-2"
@@ -31,7 +31,7 @@
                             class="absolute left-0 bottom-0 z-20 h-0 w-full opacity-75 transition-all group-hover:h-2 group-hover:bg-yellow"
                     ></div>
                     <a
-                            href="{% url "blog:all-posts" %}"
+                            href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}"
                             class="relative z-30 block px-2 font-body text-base font-medium text-primary transition-colors group-hover:text-green dark:text-white dark:group-hover:text-secondary"
                     >جدیدترین</a
                     >
@@ -54,7 +54,7 @@
                             class="absolute left-0 bottom-0 z-20 h-0 w-full opacity-75 transition-all group-hover:h-2 group-hover:bg-yellow"
                     ></div>
                     <a
-                            href="{% url "blog:bookmarks" %}"
+                            href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:bookmarks" %}"
                             class="relative z-30 block px-2 font-body text-base font-medium text-primary transition-colors group-hover:text-green dark:text-white dark:group-hover:text-secondary"
                     >
                         ذخیره‌شده‌ها
@@ -68,7 +68,7 @@
                     ></div>
                     {% if not request.user.is_authenticated %}
                         <a
-                                href="{% url "customuser:login-or-register" %}"
+                                href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "customuser:login-or-register" %}"
                                 class="relative z-30 block px-2 font-body text-base font-medium text-primary transition-colors group-hover:text-green dark:text-white dark:group-hover:text-secondary"
                         >ورود / ثبت نام</a>
                     {% else %}
@@ -82,7 +82,7 @@
                         >
                             خروج
                         </span>
-                        <form id="logout-form" action="{% url "customuser:logout" %}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "customuser:logout" %}" method="POST" style="display: none;">
                             {% csrf_token %}
                         </form>
 
@@ -102,5 +102,5 @@
             </ul>
         </div>
     </div>
-</div>
+</nav>
 {% include "layouts/sidebar.html" %}

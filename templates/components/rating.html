@@ -1,0 +1,78 @@
+<div class='flex flex-col justify-center gap-5 my-12' id="rating">
+    <h1 class='text-center font-bold text-primary dark:text-white text-xl'>این پست چطور بود؟</h1>
+	<div class='rating flex flex-row justify-center gap-3 relative mt-3'>
+		<div class='w-10 h-2.5 rounded-md transition-all duration-200 cursor-pointer flex flex-row justify-center bg-red'
+             onclick="rating(1,{{ pid }})"
+        >
+			<p class='text-2xl mt-4 select-none pointer-events-none'>🤨</p>
+		</div>
+		<div class='w-10 h-2.5 rounded-md bg-grey transition-all duration-200 cursor-pointer flex flex-row justify-center'
+             onclick="rating(2,{{ pid }})"
+        >
+			<p class='text-2xl mt-4 hidden select-none pointer-events-none'>🙂</p>
+		</div>
+		<div class='w-10 h-2.5 rounded-md bg-grey transition-all duration-200 cursor-pointer flex flex-row justify-center'
+             onclick="rating(3,{{ pid }})"
+        >
+			<p class='text-2xl mt-4 hidden select-none pointer-events-none'>😊</p>
+		</div>
+		<div class='w-10 h-2.5 rounded-md bg-grey transition-all duration-200 cursor-pointer flex flex-row justify-center'
+             onclick="rating(4,{{ pid }})"
+        >
+			<p class='text-2xl mt-4 hidden select-none pointer-events-none'>😚</p>
+		</div>
+		<div class='w-10 h-2.5 rounded-md bg-grey transition-all duration-200 cursor-pointer flex flex-row justify-center'
+             onclick="rating(5,{{ pid }})"
+        >
+			<p class='text-2xl mt-4 hidden select-none pointer-events-none'>😍</p>
+		</div>
+	</div>
+
+</div>
+
+<div class='flex justify-center my-12 hidden' id="success">
+
+<p id="rate-message" class="text-green font-bold"></p>
+
+</div>
+
+<script>
+    const rating = (rating, post_id) => {
+            fetch(`/blog/rate/${post_id}/${rating}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+              .then(data => {
+                if (data.status){
+                 document.getElementById("rating").classList.add('hidden')
+                 document.getElementById("success").classList.remove("hidden")
+                 document.getElementById("rate-message").innerHTML=data.message
+                }
+                // you may want to update the rating here
+                // to simplify stuff, I just reload the page
+            })
+        }
+    document.addEventListener("turbolinks:load", function () {
+	const rate = document.querySelector('.rating');
+	const childs = rate.children;
+    let currentShowing = childs[0].children[0];
+    for(let i = 0;i<childs.length;i++){
+        childs[i].onmouseover = ()=>{
+            currentShowing.classList.add('hidden');
+            const emote =childs[i].querySelector('p');
+            emote.classList.remove('hidden');
+            currentShowing = emote;
+            for(let j = 0;j<=i;j++){
+                childs[j].classList.remove("bg-grey");
+                childs[j].classList.add("bg-red"); // this class should be added to whitelist while in production mode
+            }
+            for(let k = i + 1;k<childs.length;k++){
+                childs[k].classList.remove("bg-red"); // this class should be added to whitelist while in production mode
+                childs[k].classList.add("bg-grey"); // this class should be added to whitelist while in production mode
+            }
+        }
+    }
+    })
+</script>

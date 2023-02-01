@@ -4,53 +4,142 @@
 
 {% block content %}
 
-<div>
-    <div class="container mx-auto">
-        <div class="border-b border-grey-lighter py-16 lg:py-20">
-            <div>
-                <img src="{% static 'img/author.jpg' %}" class="h-16 w-16 rounded-full" alt="author"/>
-            </div>
-            <h1
-                    class="pt-3 font-body text-4xl font-semibold text-primary dark:text-white text-lg"
-            >
-                سوتا یعنی:
-            </h1>
-            <p class="pt-3 font-body text-xl font-light text-primary dark:text-white">
-                مفاهیم اصلی، بدون پیچیدگی جزییات.
-            </p>
-            <!--            <a-->
-            <!--                    href="/"-->
-            <!--                    class="mt-12 block bg-secondary px-10 py-4 text-center font-body text-xl font-semibold text-white transition-colors hover:bg-green sm:inline-block sm:text-left sm:text-2xl"-->
-            <!--            >-->
-            <!--                Say Hello!-->
-            <!--            </a>-->
-        </div>
+    <div>
+        <div class="container mx-auto">
+            <header class="border-b border-grey-lighter py-16">
+                <div>
+                    <img alt="author"
+                         src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/author.jpg' %}"
+                         class="h-18 w-18 rounded-full object-contain" alt="author"/>
+                </div>
+                <h1
+                        class="pt-3 font-body text-xl font-semibold text-primary dark:text-white text-lg"
+                >
+                    آموزش برنامه نویسی در سوتا یعنی:
+                </h1>
+                <h2 class="pt-3 font-body text-xl font-light text-primary dark:text-white">
+                    پرداختن به مفاهیم اصلی، بدون پیچیدگی جزییات.
+                </h2>
+                <!--            <a-->
+                <!--                    href="/"-->
+                <!--                    class="mt-12 block bg-secondary px-10 py-4 text-center font-body text-xl font-semibold text-white transition-colors hover:bg-green sm:inline-block sm:text-left sm:text-2xl"-->
+                <!--            >-->
+                <!--                Say Hello!-->
+                <!--            </a>-->
+            </header>
 
-        <div class="py-16 lg:py-20">
-            <div class="flex items-center pb-6">
-                <img src="{% static 'img/icon-story.png' %}" alt="icon story"/>
-                <h3
-                        class="mr-3 font-body text-xl font-semibold text-primary dark:text-white"
-                >
-                    پر بازدیدترین
-                </h3>
-                <a
-                        href="{% url "blog:all-posts" %}"
-                        class="flex items-center pr-10 font-body italic text-green transition-colors hover:text-secondary dark:text-green-light dark:hover:text-secondary"
-                >
-                    همه نوشته ها
-                    <span
-                            class="mr-1.5 mdi mdi-arrow-left"
+            <section class="py-16">
+                <div class="flex items-center pb-6">
+                    <img src="{% static 'img/icon-story.png' %}" alt="icon story"/>
+                    <h4
+                            class="mr-3 font-body text-xl font-semibold text-primary dark:text-white"
                     >
+                        پر بازدیدترین
+                    </h4>
+                    <a
+                            href="{% url "blog:all-posts" %}"
+                            class="flex items-center pr-10 font-body italic text-green transition-colors hover:text-secondary dark:text-green-light dark:hover:text-secondary"
+                    >
+                        همه نوشته ها
+                        <span
+                                class="mr-1.5 mdi mdi-arrow-left"
+                        >
                     </span>
-                </a>
-            </div>
-            <div>
-                {% show_group_posts take=10 as posts %}
-                {% include "blog/show-group-posts.html" with posts=posts %}
-            </div>
+                    </a>
+                </div>
+                <div>
+                    {% show_group_posts take=10 as posts %}
+                    {% include "blog/show-group-posts.html" with posts=posts %}
+                </div>
+            </section>
         </div>
     </div>
-</div>
 
 {% endblock content %}
+
+{% block seo %}
+
+    <title>آموزش مفاهیم برنامه نویسی و طراحی وب - سوتا</title>
+
+    <meta name="description"
+          content="سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."/>
+    <meta name="robots" content="follow, index"/>
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}"/>
+    <link rel="next" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}"/>
+    <meta property="og:locale" content="fa_IR"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="آموزش مفاهیم برنامه نویسی و طراحی وب - سوتا"/>
+    <meta property="og:description"
+          content="سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."/>
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}"/>
+    <meta property="og:site_name" content="آموزش مفاهیم برنامه نویسی و طراحی وب - سوتا"/>
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+    <meta property="og:image:secure_url"
+          content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+    <meta property="og:image:width" content="1280"/>
+    <meta property="og:image:height" content="720"/>
+    <meta property="og:image:type" content="image/svg+xml"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="آموزش مفاهیم برنامه نویسی و طراحی وب - سوتا"/>
+    <meta name="twitter:description"
+          content="سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."/>
+    <meta name="twitter:site" content="@sutta"/>
+    <meta name="twitter:image"
+          content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+    <link rel=sitemap href="/sitemap.xml"/>
+
+    <script type="application/ld+json">
+    {
+   "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"وبلاگ آموزش برنامه نویسی سوتا",
+    "description":"سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."
+   }
+    </script>
+
+    <script type="application/ld+json">
+        {
+   "@context":"https://schema.org",
+   "@graph":[
+      {
+         "@type":"Organization",
+         "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization",
+         "name":"وبلاگ آموزشی سوتا",
+         "sameAs":[
+            "https://www.linkedin.com/in/sajjad-nasiri-422869210",
+            "https://instagram.com/suttablog?igshid=ZDdkNTZiNTM="
+         ]
+      },
+      {
+         "@type":"WebSite",
+         "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#website",
+         "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}",
+         "name":"وبلاگ آموزشی سوتا",
+         "description":"آموزش مفاهیم برنامه نویسی و طراحی وب",
+         "publisher":{
+            "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization"
+         },
+         "inLanguage":"fa-IR",
+         "potentialAction":{
+            "@type":"SearchAction",
+            "target":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}?query={search_term_string}",
+            "query-input":"required name=search_term_string"
+         }
+      },
+      {
+         "@type":"CollectionPage",
+         "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#webpage",
+         "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}",
+         "name":"سوتا | آموزش مفاهیم برنامه نویسی و طراحی وب",
+         "about":{
+            "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization"
+         },
+         "isPartOf":{
+            "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#website"
+         },
+         "inLanguage":"fa-IR"
+      }
+   ]
+}
+    </script>
+{% endblock %}

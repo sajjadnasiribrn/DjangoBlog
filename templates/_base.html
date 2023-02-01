@@ -14,8 +14,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#007c85">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="application-name" content="sutta"/>
 
-    <title>سوتا</title>
+    {% block seo %}
+    {% endblock %}
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
 
@@ -31,24 +33,17 @@
     <!--Alpine Js V3-->
     <script type="text/javascript" src="{% static 'src/turbolinks.js' %}"></script>
     <script type="module" src="{% static 'src/application.js' %}" data-turbolinks-eval="false"></script>
-
-
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.4.55/css/materialdesignicons.min.css">
-
     <style>
         [x-cloak] {
             display: none;
         }
     </style>
-
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
     {% endcompress %}
-
     <link rel="stylesheet" href="{% static 'src/fonts.css' %}">
-
 </head>
 
 <body

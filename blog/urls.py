@@ -8,5 +8,6 @@ urlpatterns = [
     path('<str:slug>-c<int:cid>', show_category_posts, name='show-category-posts'),
     path('all', all_posts, name='all-posts'),
     path('bookmark', bookmark, name='bookmark'),
-    path('bookmarks', bookmarks, name='bookmarks')
+    path('bookmarks', bookmarks, name='bookmarks'),
+    path('rate/<int:pid>/<int:rate>', rate, name='rate')
 ]

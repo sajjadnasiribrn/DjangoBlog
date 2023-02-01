@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_POST, require_GET
 
-from blog.forms import AllPostsForm, BookmarkForm
+from blog.forms import AllPostsForm, BookmarkForm, RateForm
 from blog.models import Post, Category
 
 
@@ -94,3 +94,21 @@ def show_category_posts(request, slug, cid):
     else:
         messages.add_message(request, messages.ERROR, 'خطایی پیش آمده. لطفا دوباره امتحان کنید.')
         return redirect(reverse('blog:show-category-posts', {'cid': cid, 'slug': slug}))
+
+
+def rate(request, pid, rate):
+    data = request.POST.copy()
+    data['post'] = pid
+    data['rate'] = rate
+    form = RateForm(data)
+
+    if form.is_valid():
+        form.save()
+        return JsonResponse({
+            "status": True,
+            "message": "با تشکر از نظر شما!",
+            "rate": rate
+        })
+
+    return redirect(reverse('website:home'))
+

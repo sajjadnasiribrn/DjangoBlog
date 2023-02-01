@@ -46,6 +46,7 @@
             >
                 {{ post.content|safe }}
             </div>
+        {% include "components/rating.html" with pid=post.id %}
             <form class="pt-16" action="{% url 'comment:create' post.id post.slug %}" method="POST">
                 {% csrf_token %}
                 <div class="w-full">
@@ -147,3 +148,203 @@
         }
     </style>
 {% endblock content %}
+
+{% block seo %}
+
+     <title>{{ post.title }}</title>
+<meta name="description" content="{{ post.description }}">
+<meta name="keywords" content="{{ post.tags.all|join:", " }}">
+<link rel="canonical" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title"
+          content="{{ post.title }}"/>
+    <meta property="og:description"
+          content="{{ post.description }}"/>
+    <meta property="og:locale" content="fa_IR"/>
+    <meta property="og:site_name" content="سوتا - آموزش مفاهیم برنامه نویسی و طراحی وب"/>
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}"/>
+    <meta property="og:image" content="{% if post.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.image.url }}{% else %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}{% endif %}"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="800"/>
+    <meta property="og:image:type" content="{% if post.image %}image/jpeg{% else %}image/svg+xml{% endif %}"/>
+    <meta property="article:author" content="سوتا"/>
+    <meta property="article:modified_time" content="{{ post.updated_at|date:"c" }}"/>
+    <meta property="article:published_time" content="{{ post.created_at|date:"c" }}"/>
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{ post.title }}" />
+    <meta name="twitter:description" content="{{ post.description }}" />
+
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+
+        <script type="application/ld+json">
+        {
+           "@context":"https://schema.org",
+           "@type":"WebPage",
+           "name":"{{ post.title }}",
+           "description":"{{ post.description }}",
+       }
+        </script>
+        <script type="application/ld+json">
+            {
+                  "@context": "https://schema.org",
+                  "@graph" : [
+                      {
+                         "@type":"Organization",
+                         "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization",
+                         "name":"وبلاگ آموزشی سوتا",
+                         "sameAs":[
+                            "https://www.linkedin.com/in/sajjad-nasiri-422869210",
+                            "https://instagram.com/suttablog?igshid=ZDdkNTZiNTM="
+
+                         ]
+                      },
+                             {
+                             "@type":"WebSite",
+                             "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#website",
+                             "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}",
+                             "name":"وبلاگ آموزش برنامه نویسی سوتا",
+                             "description":"سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است.",
+                             "publisher":{
+                                "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization"
+                             },
+                             "inLanguage":"fa-IR",
+                             "potentialAction":{
+                                "@type":"SearchAction",
+                                "target":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}?query={search_term_string}",
+                                "query-input":"required name=search_term_string"
+                             }
+                          },
+                          {% if post.image %}
+                                {
+                                "@type" : "ImageObject",
+                                "@id" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}#primaryimage",
+                                "url" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.image.url }}",
+                                "width" : 700,
+                                "height" : 500
+                            },
+                            {% endif %}
+                                                                        {
+                            "@type":"WebPage",
+                            "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}#webpage",
+                            "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}",
+                            "inLanguage":"fa-IR",
+                            "name":"{{ post.title }}",
+                            "isPartOf" : {
+                                "@id" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#website"
+                            },
+                            {% if post.image %}
+                            "primaryImageOfPage" : {
+                                "@id" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.image.url }}"
+                            },
+                            {% endif %}
+                             "datePublished": "{{ post.updated_at|date:"c" }}",
+                             "dateModified": "{{ post.created_at|date:"c" }}",
+                             "description" : "{{ post.description }}",
+                             "breadcrumb" : {
+                                    "@id" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}#breadcrumb"
+                                }
+                        }
+                                                                            ,{
+                                "@type" : "BreadcrumbList",
+                                "@id" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}#breadcrumb",
+                                "itemListElement" : [
+                                                   {
+                                            "@type" : "ListItem",
+                                            "position" : 1,
+                                            "item" : {
+                                                "@type" : "WebPage",
+                                                "@id" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}",
+                                                "url" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}",
+                                                "name" : "صفحه‌ اصلی"
+                                            }
+                                        },                                                                            {
+                                            "@type" : "ListItem",
+                                            "position" : 2,
+                                            "item" : {
+                                                "@type" : "WebPage",
+                                                "@id" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}",
+                                                "url" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}",
+                                                "name" : "مقاله های آموزش برنامه نویسی"
+                                            }
+                                        },                                                                            {
+                                            "@type" : "ListItem",
+                                            "position" : 3,
+                                            "item" : {
+                                                "@type" : "WebPage",
+                                                "@id" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}",
+                                                "url" : "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}",
+                                                "name" : "{{ post.title }}"
+                                            }
+                                        }                                                                    ]
+                            }
+                                     ,{
+                                "@type":"Article",
+                                "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}#article",
+                                "isPartOf":{
+                                    "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}#webpage"
+                                },
+                                "author":{
+                                      "@type":"Organization",
+                                      "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization"
+                                      "name":"سوتا",
+                                      "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}"
+                                },
+                                "headline":"{{ post.title }}",
+                                "datePublished": "{{ post.updated_at|date:"c" }}",
+                                "dateModified": "{{ post.created_at|date:"c" }}",
+                                "commentCount" : {{ post.comments_count }},
+                                "mainEntityOfPage":{
+                                    "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}#webpage"
+                                },
+                                "publisher":{
+                                    "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization"
+                                },
+                                {% if post.image %}
+                                "image":{
+                                    "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.image.url }}#primaryimage"
+                                },
+                                {% endif %}
+                                "keywords":"{{ post.tags.all|join:", " }}",
+                                "articleSection":"{{ post.categories.first }}"
+                                }                                                       ]
+                             }
+
+        </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "CreativeWorkSeries",
+            "headline": "{{ post.title }}",
+            "url": {{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }},
+            "description": "{{ post.description}}",
+            {% if post.image %}
+            "image": "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.image.url }}",
+            {% endif %}
+            "author": {
+                      "@type":"Organization",
+                      "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization"
+                      "name":"سوتا",
+                      "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}"
+                },
+            "publisher": {
+                      "@type":"Organization",
+                      "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization"
+                      "name":"سوتا",
+            },
+            "datePublished": "{{ post.updated_at|date:"c" }}",
+            "dateModified": "{{ post.created_at|date:"c" }}",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "itemReviewed": {
+                "@type": "Thing",
+                "name": "{{ post.title }}",
+                "url": "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}"
+                },
+                "ratingValue": "{{ post.rate_avg }}",
+                "bestRating": "{{ post.max_rate }}",
+                "ratingCount": "{{ post.rate_count }}"
+                }
+                    }
+    </script>
+{% endblock %}

@@ -7,7 +7,7 @@
     <div x-data
          x-init="setTimeout(()=>{
                  document.getElementById('here').scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
-                 },700)"
+                 },1500)"
     >
         <div class="container mx-auto">
             <div class="py-16">
@@ -60,5 +60,11 @@
             </div>
         </div>
     </div>
+
+{% endblock %}
+
+{% block seo %}
+
+<title>نوشته های ذخیره شده - سوتا</title>
 
 {% endblock %}

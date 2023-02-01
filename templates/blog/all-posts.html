@@ -5,9 +5,9 @@
 {% block content %}
 
     <div x-data
-         x-init="setTimeout(()=>{
-                 document.getElementById('here').scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});
-                 },700)"
+{#         x-init="setTimeout(()=>{#}
+{#                 document.getElementById('here').scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'});#}
+{#                 },3500)"#}
     >
         <div class="container mx-auto">
             <div class="py-16">
@@ -134,6 +134,119 @@
                 },
             }
         }
+    </script>
+
+{% endblock %}
+
+{% block seo %}
+
+    <title>مقالات آموزشی - آموزش مفاهیم برنامه نویسی و طراحی وب</title>
+
+    <meta name="description"
+          content="سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."/>
+    <meta name="robots" content="follow, index"/>
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}"/>
+{#    <link rel="next" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}"/>#}
+    <meta property="og:locale" content="fa_IR"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="مقالات آموزشی - آموزش مفاهیم برنامه نویسی و طراحی وب"/>
+    <meta property="og:description"
+          content="سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."/>
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}"/>
+    <meta property="og:site_name" content="آموزش مفاهیم برنامه نویسی و طراحی وب - سوتا"/>
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+    <meta property="og:image:secure_url"
+          content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+    <meta property="og:image:width" content="1280"/>
+    <meta property="og:image:height" content="720"/>
+    <meta property="og:image:type" content="image/svg+xml"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="مقالات آموزشی - آموزش مفاهیم برنامه نویسی و طراحی وب"/>
+    <meta name="twitter:description"
+          content="سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."/>
+    <meta name="twitter:site" content="@sutta"/>
+    <meta name="twitter:image"
+          content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+
+    <script type="application/ld+json">
+    {
+   "@context":"https://schema.org",
+    "@type":"WebPage",
+   "name":"مقالات آموزشی - آموزش مفاهیم برنامه نویسی و طراحی وب",
+   "description":"سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."
+   }
+    </script>
+
+    <script type="application/ld+json">
+     {
+   "@context":"https://schema.org",
+   "@graph":[
+      {
+         "@type":"Organization",
+         "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization",
+         "name":"وبلاگ آموزشی سوتا",
+         "sameAs":[
+            "https://www.linkedin.com/in/sajjad-nasiri-422869210",
+            "https://instagram.com/suttablog?igshid=ZDdkNTZiNTM="
+
+         ]
+      },
+      {
+         "@type":"WebSite",
+         "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#website",
+         "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}",
+         "name":"وبلاگ آموزش برنامه نویسی سوتا",
+         "description":"سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است.",
+         "publisher":{
+            "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#organization"
+         },
+         "inLanguage":"fa-IR",
+         "potentialAction":{
+            "@type":"SearchAction",
+            "target":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}?query={search_term_string}",
+            "query-input":"required name=search_term_string"
+         }
+      },
+
+      {
+   "@type":"BreadcrumbList",
+   "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}#breadcrumb",
+   "itemListElement":[
+      {
+         "@type":"ListItem",
+         "position":1,
+         "item":{
+            "@type":"WebPage",
+            "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}",
+            "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}",
+            "name":"صفحه‌ اصلی"
+         }
+      },
+      {
+         "@type":"ListItem",
+         "position":2,
+         "item":{
+            "@type":"WebPage",
+            "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}",
+            "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}",
+            "name":"مقالات آموزش برنامه نویسی"
+         }
+      }
+   ]
+},
+      {
+         "@type":"CollectionPage",
+         "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}#webpage",
+         "url":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "blog:all-posts" %}",
+         "name":"مقالات آموزشی - آموزش مفاهیم برنامه نویسی و طراحی وب",
+         "description":"سوتا وبلاگ تخصصی آموزش برنامه نویسی، طراحی وب و پاسخ به سوالات در زمینه laravel، django، پایتون، PHP ، HTML، CSS، vue، لینوکس، docker و... است."
+         "isPartOf":{
+            "@id":"{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}#website"
+         },
+         "inLanguage":"fa-IR"
+      }
+   ]
+}
     </script>
 
 {% endblock %}

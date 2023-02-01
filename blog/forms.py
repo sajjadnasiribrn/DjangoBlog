@@ -1,7 +1,7 @@
 from django import forms
 from django.shortcuts import get_object_or_404
 
-from blog.models import Post
+from blog.models import Post, Rate
 
 
 class AllPostsForm(forms.Form):
@@ -27,6 +27,18 @@ class AllPostsForm(forms.Form):
 class BookmarkForm(forms.Form):
     post = forms.IntegerField(required=True)
     is_bookmarked = forms.BooleanField(required=False)
+
+    def clean_post(self):
+        return get_object_or_404(Post.objects.all(), pk=self.cleaned_data['post'])
+
+
+class RateForm(forms.ModelForm):
+    post = forms.IntegerField(required=True)
+    rate = forms.IntegerField(required=True, min_value=1, max_value=5)
+
+    class Meta:
+        model = Rate
+        fields = '__all__'
 
     def clean_post(self):
         return get_object_or_404(Post.objects.all(), pk=self.cleaned_data['post'])
