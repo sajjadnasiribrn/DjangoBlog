@@ -30,6 +30,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     tags = TaggableManager()
     slug = models.SlugField(max_length=255, unique=True, null=True)
+    description = models.TextField(max_length=150, null=True)
 
     # created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

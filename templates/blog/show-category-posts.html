@@ -62,3 +62,26 @@
     </div>
 
 {% endblock %}
+
+{% block seo %}
+<title>{{ category.name }}</title>
+    <meta name=description
+          content="{{ category.description }}"/>
+    <meta name=keywords
+          content="{{ category.tags.all|join:", " }}"/>
+    <meta name=ROBOTS content="INDEX, FOLLOW">
+    <base href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "website:home" %}"/>
+    <link rel=canonical href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ category.get_absolute_url }}"/>
+    <meta property=og:url content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ category.get_absolute_url }}"/>
+    <meta property=og:type content=article/>
+    <meta property=og:title content='{{ category.name }}'/>
+    <meta property=og:description
+          content='{{ category.description }}'/>
+    <meta property=og:site_name content='سوتا'/>
+    <meta property=og:image content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/logo.svg' %}"/>
+    <link rel=sitemap href="/sitemap.xml"/>
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{ category.name }}" />
+    <meta name="twitter:description" content="{{ category.description }}" />
+{% endblock %}
